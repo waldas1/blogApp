@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+      <!--th:with="userExist=${user.username || user.password ne null}">-->
+<head>
+    <meta charset="UTF-8">
+    <title>Register new user</title>
+</head>
+<body>
+    <h3>Register user</h3>
+    <form method="post" th:object="${user}">
+        <div>
+            <label>Name:</label>
+            <input type="text" placeholder="Name" th:field="*{name}">
+        </div>
+        <div>
+            <label>Surname:</label>
+            <input type="text" placeholder="Surname" th:field="*{surname}">
+        </div>
+        <div>
+            <label>Username:</label>
+            <input type="text" placeholder="Username" th:field="*{username}">
+        </div>
+        <div>
+            <label>Password:</label>
+            <input type="text" placeholder="Password" th:field="*{password}">
+        </div>
+        <div th:value="${user.getRole()=='user'}" th:field="*{role}"></div>
+        <div>
+            <label>Age:</label>
+            <input type="text" placeholder="Age" th:field="*{age}">
+        </div>
+        <button type="submit">Register</button>
+    </form>
+
+</body>
+</html>
