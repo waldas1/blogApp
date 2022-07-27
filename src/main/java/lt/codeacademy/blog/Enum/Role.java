@@ -5,7 +5,7 @@ public enum Role {
 
     USER("user"),
 
-    NOTCONNECTEDUSER("notConnectedUser");
+    GUEST("guest");
 
     private final String roleName;
 

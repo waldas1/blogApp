@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/users")
+@RequestMapping("/blogoo")
 public class UserController {
     private final UserService userService;
 
@@ -19,23 +19,40 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/save")
+    @GetMapping("/registration")
     public String registerUser(Model model, User user) {
         user.setRole(Role.USER);
         model.addAttribute("user", new User());
         return "form/registration";
     }
 
-    @PostMapping("/save")
+    @PostMapping("/registration")
     public String createProduct(User user,Model model) {
         model.addAttribute("user", new User());
         userService.createUser(user);
-        return "redirect:/users/save";
+        return "redirect:/users";
     }
 
-    @GetMapping
+    @GetMapping("/users")
     public String showUsers(Model model, Pageable pageable){
         model.addAttribute("usersInPage", userService.getUsers(pageable));
         return "users";
     }
+
+    @GetMapping
+    public String start(){
+        return "signin";
+    }
+
+//    @GetMapping("{role}")
+//    public String start(Model model, @RequestParam(required = true) Role role){
+//        if (role == role.ADMIN){
+//
+//        }else if (role == role.USER){
+//
+//        }else if(role == role.GUEST){
+//
+//        }
+//        return ;
+//    }
 }
