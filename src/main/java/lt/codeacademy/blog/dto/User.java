@@ -3,10 +3,10 @@ package lt.codeacademy.blog.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lt.codeacademy.blog.Enum.Role;
 import lt.codeacademy.blog.entity.UserEntity;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Setter
 @Getter
@@ -17,11 +17,11 @@ public class User {
     private String surname;
     private String username;
     private String password;
-    private String role;
+    private Role role;
     private int age;
     private LocalDateTime registerDate;
 
-    public User(String name, String surname, String username, String password, String role, int age, LocalDateTime birthDate) {
+    public User(String name, String surname, String username, String password, Role role, int age, LocalDateTime birthDate) {
         this.name = name;
         this.surname = surname;
         this.username = username;

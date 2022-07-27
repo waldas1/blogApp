@@ -3,6 +3,7 @@ package lt.codeacademy.blog.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lt.codeacademy.blog.Enum.Role;
 import lt.codeacademy.blog.dto.User;
 
 import javax.persistence.*;
@@ -17,18 +18,16 @@ import java.util.Date;
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(columnDefinition = "varchar(36)", updatable = false)
-//    @Type(type = "id-char")
     private Long id;
     private String name;
     private String surname;
     private String username;
     private String password;
-    private String role;
+    private Role role;
     private int age;
     private LocalDateTime registerDate;
 
-    public UserEntity(String name, String surname, String username, String password, String role, int age, LocalDateTime registerDate) {
+    public UserEntity(String name, String surname, String username, String password, Role role, int age, LocalDateTime registerDate) {
         this.name = name;
         this.surname = surname;
         this.username = username;

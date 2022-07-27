@@ -1,7 +1,9 @@
 package lt.codeacademy.blog.controller;
 
+import lt.codeacademy.blog.Enum.Role;
 import lt.codeacademy.blog.dto.User;
 import lt.codeacademy.blog.service.UserService;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +20,8 @@ public class UserController {
     }
 
     @GetMapping("/save")
-    public String registerUser(Model model) {
+    public String registerUser(Model model, User user) {
+        user.setRole(Role.USER);
         model.addAttribute("user", new User());
         return "form/registration";
     }
@@ -27,6 +30,12 @@ public class UserController {
     public String createProduct(User user,Model model) {
         model.addAttribute("user", new User());
         userService.createUser(user);
+        return "redirect:/users/save";
+    }
+
+    @GetMapping
+    public String showUsers(Model model, Pageable pageable){
+        model.addAttribute("usersInPage", userService.getUsers(pageable));
         return "users";
     }
 }

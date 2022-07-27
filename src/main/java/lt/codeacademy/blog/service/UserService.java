@@ -3,6 +3,8 @@ package lt.codeacademy.blog.service;
 import lt.codeacademy.blog.dto.User;
 import lt.codeacademy.blog.entity.UserEntity;
 import lt.codeacademy.blog.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,7 +14,13 @@ public class UserService {
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-    public void createUser(User user){
+
+    public void createUser(User user) {
         userRepository.save(UserEntity.convert(user));
+    }
+
+    public Page<User> getUsers(Pageable pageable) {
+        return userRepository.findAll(pageable)
+                .map(User::convert);
     }
 }
