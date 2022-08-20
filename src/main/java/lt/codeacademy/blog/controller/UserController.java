@@ -1,6 +1,5 @@
 package lt.codeacademy.blog.controller;
 
-import lt.codeacademy.blog.Enum.Role;
 import lt.codeacademy.blog.dto.User;
 import lt.codeacademy.blog.service.UserService;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +20,6 @@ public class UserController {
 
     @GetMapping("/registration")
     public String registerUser(Model model, User user) {
-        user.setRole(Role.USER);
         model.addAttribute("user", new User());
         return "form/registration";
     }

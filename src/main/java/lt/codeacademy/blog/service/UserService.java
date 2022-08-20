@@ -1,6 +1,5 @@
 package lt.codeacademy.blog.service;
 
-import lt.codeacademy.blog.Enum.Role;
 import lt.codeacademy.blog.dto.User;
 import lt.codeacademy.blog.entity.UserEntity;
 import lt.codeacademy.blog.repository.UserRepository;
@@ -27,9 +26,5 @@ public class UserService {
                 .map(User::convert);
     }
 
-    public List<User> getUserByRole(Role role){
-        return userRepository.findByRole(role).stream()
-                .map(User::convert)
-                .toList();
-    }
+
 }

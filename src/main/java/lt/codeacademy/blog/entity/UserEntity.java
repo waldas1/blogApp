@@ -3,13 +3,11 @@ package lt.codeacademy.blog.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lt.codeacademy.blog.dto.Role;
+import lt.codeacademy.blog.dto.Pictures;
 import lt.codeacademy.blog.dto.User;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -49,6 +47,12 @@ public class UserEntity {
     @JoinTable(joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<RoleEntity> role;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<CommentEntity> commentEntityList;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<PictureEntity> pictureEntityList;
+
     public UserEntity(String name, String surname, String username, String password, String repeatPassword, String country, String city, String street, String postCode, int age, String email, Set<RoleEntity> role) {
         this.name = name;
         this.surname = surname;
@@ -68,6 +72,7 @@ public class UserEntity {
         Set<RoleEntity> role = user.getRole().stream()
                 .map(RoleEntity::convert)
                 .collect(Collectors.toSet());
+
 
         return new UserEntity(user.getName(),
                 user.getSurname(),

@@ -8,7 +8,6 @@ import lt.codeacademy.blog.dto.Role;
 
 import javax.persistence.*;
 
-
 @Getter
 @Setter
 @Entity
