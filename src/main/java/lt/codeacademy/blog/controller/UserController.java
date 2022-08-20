@@ -27,21 +27,21 @@ public class UserController {
     }
 
     @PostMapping("/registration")
-    public String createProduct(User user,Model model) {
+    public String createProduct(User user, Model model) {
         model.addAttribute("user", new User());
         userService.createUser(user);
-        return "redirect:/users";
+        return "redirect:/blogoo/users";
     }
 
     @GetMapping("/users")
-    public String showUsers(Model model, Pageable pageable){
+    public String showUsers(Model model, Pageable pageable) {
         model.addAttribute("usersInPage", userService.getUsers(pageable));
         return "users";
     }
 
     @GetMapping
-    public String start(){
-        return "signin";
+    public String start() {
+        return "login";
     }
 
 //    @GetMapping("{role}")

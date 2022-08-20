@@ -1,40 +1,54 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
-      <!--th:with="userExist=${user.username || user.password ne null}">-->
+<!--th:with="userExist=${user.username || user.password ne null}">-->
 <head>
     <meta charset="UTF-8">
     <title>Register new user</title>
+    <link th:href="@{/css/registration.css}" rel="stylesheet">
 </head>
 <body>
+<main class="form-registration">
     <h3>Register user</h3>
     <form method="post" th:object="${user}">
-        <div>
+        <div class="inputs">
             <label>Name:</label>
-            <input type="text" placeholder="Name" th:field="*{name}">
+            <input type="text" placeholder="Name" th:field="*{name}" required>
         </div>
-        <div>
+        <div class="inputs">
             <label>Surname:</label>
-            <input type="text" placeholder="Surname" th:field="*{surname}">
+            <input type="text" placeholder="Surname" th:field="*{surname}" required>
         </div>
-        <div>
+        <div class="inputs">
             <label>Username:</label>
-            <input type="text" placeholder="Username" th:field="*{username}">
+            <input type="text" placeholder="Username" th:field="*{username}" required>
         </div>
-        <div>
+        <div class="inputs">
             <label>Password:</label>
-            <input type="text" placeholder="Password" th:field="*{password}">
+            <input type="text" placeholder="Password" th:field="*{password}" required>
         </div>
-
-        <div>
+        <div class="inputs">
+            <label th:text="">Your role is:</label>
         </div>
-
-        <div>
+        <div class="inputs">
             <label>Age:</label>
-            <input type="text" placeholder="Age" th:field="*{age}">
+            <input type="text" placeholder="Age" th:field="*{age}" required>
+        </div>
+        <div class="inputs">
+            <label>E-mail:</label>
+            <input type="email" placeholder="name@example.com" th:field="*{email}" required>
         </div>
         <button type="submit">Register</button>
     </form>
-
+    <footer>
+        <h1>
+            <i class="bi bi-emoji-sunglasses"></i>
+            BLOGOO App</h1>
+    </footer>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>
 </html>
