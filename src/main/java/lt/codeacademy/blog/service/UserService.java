@@ -5,12 +5,14 @@ import lt.codeacademy.blog.entity.UserEntity;
 import lt.codeacademy.blog.repository.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
 
     public UserService(UserRepository userRepository) {
@@ -26,5 +28,11 @@ public class UserService {
                 .map(User::convert);
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
+        UserEntity user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(String.format("User by username: %s does not exist", username)));
+        return User.convert(user);
+    }
 
 }

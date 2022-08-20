@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:with="userExist=${user.id ne null}">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <title th:text="#{lt.codeacademy.blog.form.create.title}"></title>
+    <link th:href="@{/css/registration.css}" rel="stylesheet">
+</head>
+<body>
+<nav th:replace="fragments/fragments :: navBar"></nav>
+<div class="container">
+    <div class="col-md7">
+        <h2 class="featurette-heading fw-normal lh-1">
+            asdgsadfghsdgasdgsda
+            <span class="text-muted"> saegfsadghsdfhdtfehdef</span>
+        </h2>
+        <p class="lead">
+            "asfasgewarrehgdfgdf"
+        </p>
+    </div>
+    <div class="col-md-5">
+        <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
+             width="500" height="500" xmlns="http://www.w3.org/2000/svg"
+             role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice"
+             focusable="false">
+            <title>Placeholder</title>
+            <rect width="100%" height="100%" fill="#eee"></rect>
+            <text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text>
+        </svg>
+    </div>
+</div>
+
+</body>
+<footer th:replace="fragments/fragments :: footer"></footer>
+</html>

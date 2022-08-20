@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Pictures {
+public class Picture {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,13 +25,13 @@ public class Pictures {
     @NotBlank
     private LocalDateTime date;
 
-    public Pictures(String urlPic, LocalDateTime date) {
+    public Picture(String urlPic, LocalDateTime date) {
         this.urlPic = urlPic;
         this.date = date;
     }
 
-    public static Pictures convert(PictureEntity entity){
-        return new Pictures(entity.getUrlPic(),
+    public static Picture convert(PictureEntity entity){
+        return new Picture(entity.getUrlPic(),
                 entity.getDate());
     }
 }

@@ -14,7 +14,7 @@ import java.util.List;
 @Configuration
 @PropertySource("classpath:blog.properties")
 public class Blog {
-    @Value("Blog")
+    @Value("Blogoo App")
     private String name;
     @Value("+3706269719")
     private String phoneNumber;

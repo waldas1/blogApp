@@ -1,0 +1,11 @@
+#POSTGRES
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: eshop
+    password: mypassword
+  sql:
+    init:
+      mode: always
+      data-locations: classpath:db/data.sql

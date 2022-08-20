@@ -3,7 +3,6 @@ package lt.codeacademy.blog.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lt.codeacademy.blog.dto.Pictures;
 import lt.codeacademy.blog.dto.User;
 
 import javax.persistence.*;
