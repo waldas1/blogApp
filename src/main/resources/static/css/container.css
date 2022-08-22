@@ -1,0 +1,9 @@
+.album{
+    display: inline-flex;
+    align-items: center;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+}

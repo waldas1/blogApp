@@ -9,7 +9,7 @@
 </head>
 <body>
 <nav th:fragment="navBar"
-     class="navbar navbar-expand-lg navbar-blue bg-blue">
+     class="navbar navbar-expand-lg navbar-primary bg-primary">
     <div class="container">
         <a class="navbar-brand"
            th:href="@{/public/content}"
@@ -27,13 +27,6 @@
                        th:classappend="${#httpServletRequest.requestURI eq '/public/content' ? 'active' : ''}"
                        th:href="@{/public/content}"
                        th:text="#{lt.codeacademy.blog.menu.allcontent}"></a>
-                </li>
-                <li sec:authentication="hasRole('ADMIN')"
-                    class="nav-item">
-                    <a class="nav-link"
-                       th:classappend="${#httpServletRequest.requestURI eq '/public/content' ? 'active' : ''}"
-                       th:href="@{/public/content}"
-                       th:text="#{lt.codeacademy.blog.menu.content}"></a>
                 </li>
                 <li th:replace="this :: languageSelector"></li>
             </ul>
@@ -98,6 +91,52 @@
         </li>
     </ul>
 </li>
+<div th:fragment="inputWitherrorHandler(id, fieldName, isValueValid, text, type, showGlobalErrors)"
+     class="form-floating mb-3">
+    <input th:type="${type}"
+           class="form-control"
+           th:id="${id}"
+           th:field="*{__${fieldName}__}"
+           th:placeholder="${text}"
+           th:classappend="${#fields.hasErrors(fieldName) || showGlobalErrors && #fields.hasErrors('global')} ? 'is-invalid': (${isValueValid} ? 'is-valid' : '')">
+    <label th:for="${id}"
+           th:text="${text}"></label>
+    <div class="invalid-feedback">
+        <div th:if="${#fields.hasErrors(fieldName)}"
+             th:errors="*{__${fieldName}__}">
+        </div>
+        <div th:if="${showGlobalErrors && #fields.hasErrors('global')}"
+             th:errors="*{global}">
+        </div>
+    </div>
+</div>
+
+<div th:fragment="contentDetails" class="col">
+    <div class="card shadow-sm">
+        <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
+             xmlns="http://www.w3.org/2000/svg"
+             role="img"
+             aria-label="Placeholder: Thumbnail"
+             preserveAspectRatio="xMidYMid slice" f
+             ocusable="false">
+            <title>Placeholder</title>
+            <rect width="100%" height="100%" fill="#55595c"></rect>
+            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+        </svg>
+
+        <div class="card-body">
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                </div>
+                <small class="text-muted">9 mins</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 </body>
 <footer th:fragment="footer"

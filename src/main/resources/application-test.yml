@@ -2,9 +2,9 @@
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: eshop
-    password: mypassword
+    url: jdbc:postgresql://localhost:5432/blog
+    username: blog
+    password: blog
   sql:
     init:
       mode: always

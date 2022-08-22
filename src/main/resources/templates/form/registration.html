@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      th:with="userExist=${user.id ne null}">
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
@@ -11,156 +9,23 @@
     <link th:href="@{/css/registration.css}" rel="stylesheet">
 </head>
 <body>
-<main class="form-registration">
+<nav th:replace="fragments/fragments :: navBar"></nav>
+<div class="container main-area">
     <h3 th:text="#{lt.codeacademy.blog.form.create.title}"></h3>
-    <form method="post" th:object="${user}">
-        <div class="inputs">
-            <input type="text"
-                   id="floatingInputName"
-                   th:field="*{name}"
-                   th:placeholder="#{lt.codeacademy.blog.form.name}"
-                   th:classappend="${#fields.hasErrors('name')} ? 'is-invalid': (${user.name ne null} ? 'is-valid' : '')">
-            <label for="floatingInputName"
-                   th:text="#{lt.codeacademy.blog.form.name}"></label>
-            <div class="invalid-feedback"
-                 th:if="${#fields.hasErrors('name')}"
-                 th:errors="*{name}">
-            </div>
-        </div>
-        <div class="inputs">
-            <input type="text"
-                   id="floatingInputSurname"
-                   th:field="*{surname}"
-                   th:placeholder="#{lt.codeacademy.blog.form.surname}"
-                   th:classappend="${#fields.hasErrors('surname')} ? 'is-invalid': (${user.surname ne null} ? 'is-valid' : '')">
-            <label for="floatingInputSurname"
-                    th:text="#{lt.codeacademy.blog.form.surname}"></label>
-            <div class="invalid-feedback"
-                 th:if="${#fields.hasErrors('surname')}"
-                 th:errors="*{surname}">
-            </div>
-        </div>
-        <div class="inputs">
-            <input type="text"
-                   id="floatingInputUsername"
-                   th:field="*{username}"
-                   th:placeholder="#{lt.codeacademy.blog.form.username}"
-                   th:classappend="${#fields.hasErrors('username')} ? 'is-invalid': (${user.username ne null} ? 'is-valid' : '')">
-            <label for="floatingInputUsername"
-                   th:text="#{lt.codeacademy.blog.form.username}"></label>
-            <div class="invalid-feedback"
-                 th:if="${#fields.hasErrors('username')}"
-                 th:errors="*{username}">
-            </div>
-        </div>
-        <div class="inputs">
-            <input type="text"
-                   id="floatingInputPassword"
-                   th:field="*{password}"
-                   th:placeholder="#{lt.codeacademy.blog.form.password}"
-                   th:classappend="${#fields.hasErrors('password')} ? 'is-invalid': (${user.password ne null} ? 'is-valid' : '')">
-            <label for="floatingInputPassword"
-                   th:text="#{lt.codeacademy.blog.form.password}"></label>
-            <div class="invalid-feedback"
-                 th:if="${#fields.hasErrors('password')}"
-                 th:errors="*{password}">
-            </div>
-        </div>
-        <div class="inputs">
-        <input type="text"
-               id="floatingInputRepeatPassword"
-               th:field="*{repeatPassword}"
-               th:placeholder="#{lt.codeacademy.blog.form.repeatPassword}"
-               th:classappend="${#fields.hasErrors('repeatPassword')} ? 'is-invalid': (${user.repeatPassword ne null} ? 'is-valid' : '')">
-        <label for="floatingInputRepeatPassword"
-               th:text="#{lt.codeacademy.blog.form.repeatPassword}"></label>
-        <div class="invalid-feedback"
-             th:if="${#fields.hasErrors('repeatPassword')}"
-             th:errors="*{repeatPassword}">
-        </div>
-    </div>
-        <div class="inputs">
-        <input type="text"
-               id="floatingInputCountry"
-               th:field="*{country}"
-               th:placeholder="#{lt.codeacademy.blog.form.country}"
-               th:classappend="${#fields.hasErrors('country')} ? 'is-invalid': (${user.country ne null} ? 'is-valid' : '')">
-        <label for="floatingInputCountry"
-               th:text="#{lt.codeacademy.blog.form.country}"></label>
-        <div class="invalid-feedback"
-             th:if="${#fields.hasErrors('country')}"
-             th:errors="*{country}">
-        </div>
-    </div>
-        <div class="inputs">
-        <input type="text"
-               id="floatingInputCity"
-               th:field="*{city}"
-               th:placeholder="#{lt.codeacademy.blog.form.city}"
-               th:classappend="${#fields.hasErrors('city')} ? 'is-invalid': (${user.city ne null} ? 'is-valid' : '')">
-        <label for="floatingInputCity"
-               th:text="#{lt.codeacademy.blog.form.city}"></label>
-        <div class="invalid-feedback"
-             th:if="${#fields.hasErrors('city')}"
-             th:errors="*{city}">
-        </div>
-    </div>
-        <div class="inputs">
-        <input type="text"
-               id="floatingInputStreet"
-               th:field="*{street}"
-               th:placeholder="#{lt.codeacademy.blog.form.street}"
-               th:classappend="${#fields.hasErrors('street')} ? 'is-invalid': (${user.street ne null} ? 'is-valid' : '')">
-        <label for="floatingInputStreet"
-               th:text="#{lt.codeacademy.blog.form.street}"></label>
-        <div class="invalid-feedback"
-             th:if="${#fields.hasErrors('street')}"
-             th:errors="*{street}">
-        </div>
-    </div>
-        <div class="inputs">
-            <input type="text"
-                   id="floatingInputPostCode"
-                   th:field="*{postCode}"
-                   th:placeholder="#{lt.codeacademy.blog.form.postCode}"
-                   th:classappend="${#fields.hasErrors('postCode')} ? 'is-invalid': (${user.postCode ne null} ? 'is-valid' : '')">
-            <label for="floatingInputPostCode"
-                   th:text="#{lt.codeacademy.blog.form.postCode}"></label>
-            <div class="invalid-feedback"
-                 th:if="${#fields.hasErrors('postCode')}"
-                 th:errors="*{postCode}">
-            </div>
-        </div>
-        <div class="inputs">
-            <input type="text"
-                   id="floatingInputAge"
-                   th:field="*{age}"
-                   th:placeholder="#{lt.codeacademy.blog.form.age}"
-                   th:classappend="${#fields.hasErrors('age')} ? 'is-invalid': (${user.age ne null} ? 'is-valid' : '')">
-            <label for="floatingInputAge"
-                   th:text="#{lt.codeacademy.blog.form.age}"></label>
-            <div class="invalid-feedback"
-                 th:if="${#fields.hasErrors('age')}"
-                 th:errors="*{age}">
-            </div>
-        </div>
-        <div class="inputs">
-            <input type="text"
-                   id="floatingInputEmail"
-                   th:field="*{email}"
-                   th:placeholder="#{lt.codeacademy.blog.form.email}"
-                   th:classappend="${#fields.hasErrors('email')} ? 'is-invalid': (${user.email ne null} ? 'is-valid' : '')">
-            <label for="floatingInputEmail"
-                   th:text="#{lt.codeacademy.blog.form.email}"></label>
-            <div class="invalid-feedback"
-                 th:if="${#fields.hasErrors('email')}"
-                 th:errors="*{email}">
-            </div>
-        </div>
+    <form method="post" th:object="${user}" th:action="@{/public/blogoo/registration}">
+        <div th:replace="fragments/fragments :: inputWitherrorHandler('floatingInputName', 'name', ${user.name ne null}, #{lt.codeacademy.blog.form.name}, 'text', false)"></div>
+        <div th:replace="fragments/fragments :: inputWitherrorHandler('floatingInputSurname', 'surname', ${user.surname ne null}, #{lt.codeacademy.blog.form.surname}, 'text', false)"></div>
+        <div th:replace="fragments/fragments :: inputWitherrorHandler('floatingInputUsername', 'username', ${user.username ne null}, #{lt.codeacademy.blog.form.username}, 'text', false)"></div>
+        <div th:replace="fragments/fragments :: inputWitherrorHandler('floatingInputPassword', 'password', ${user.password ne null}, #{lt.codeacademy.blog.form.password}, 'text', true)"></div>
+        <div th:replace="fragments/fragments :: inputWitherrorHandler('floatingInputRepeatPassword', 'repeatPassword', ${user.repeatPassword ne null}, #{lt.codeacademy.blog.form.repeatPassword}, 'text', true)"></div>
+        <div th:replace="fragments/fragments :: inputWitherrorHandler('floatingInputCountry', 'country', ${user.country ne null}, #{lt.codeacademy.blog.form.country}, 'text', false)"></div>
+        <div th:replace="fragments/fragments :: inputWitherrorHandler('floatingInputAge', 'age', ${user.age ne null}, #{lt.codeacademy.blog.form.age}, 'text', false)"></div>
+        <div th:replace="fragments/fragments :: inputWitherrorHandler('floatingInputEmail', 'email', ${user.email ne null}, #{lt.codeacademy.blog.form.email}, 'text', false)"></div>
+
         <button type="submit"
-        th:text="#{lt.codeacademy.blog.form.create.title}"></button>
+                th:text="#{lt.codeacademy.blog.form.create.title}"></button>
     </form>
-</main>
+</div>
 </body>
 <footer th:replace="fragments/fragments :: footer"></footer>
 </html>

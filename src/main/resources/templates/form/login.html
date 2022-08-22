@@ -9,7 +9,7 @@
 </head>
 <body class="text-center">
 <main class="form-signin w-100 m-auto"
-      th:with="shouldShow=${param.errpr ne null}">
+      th:with="shouldShow=${param.error ne null}">
     <div th:replace="fragments/fragments :: notification(${shouldShow}, 'alert-danger', #{lt.codeacademy.eshop.login.failed})"></div>
     <form method="post" th:action="@{/login}">
         <h1>
@@ -39,20 +39,20 @@
             <label>
                 <input type="checkbox"
                        value="remember-me"
-                th:text="#{lt.codeacademy.blog.login.remember}">
+                       th:text="#{lt.codeacademy.blog.login.remember}">
             </label>
         </div>
         <button class="w-100 btn btn-lg btn-primary"
                 type="submit"
-        th:text="#{lt.codeacademy.blog.login.signIn}"></button>
-        <a th:href="@{/blogoo/registration}">
-            <button type="button"
-                    class="btn btn-outline-secondary"
-                    th:text="#{lt.codeacademy.blog.login.register}">
-            </button>
-        </a>
+                th:text="#{lt.codeacademy.blog.login.signIn}">
+        </button>
+        <button type="button"
+                class="btn btn-outline-secondary">
+            <a th:href="@{/public/blogoo/registration}"
+               th:text="#{lt.codeacademy.blog.login.register}"></a>
+        </button>
         <button type="button" class="btn btn-outline-secondary"
-        th:text="#{lt.codeacademy.blog.login.signLikeGuest}"></button>
+                th:text="#{lt.codeacademy.blog.login.signLikeGuest}"></button>
         <p class="mt-5 mb=3 text-muted"> © 2022</p>
     </form>
 </main>

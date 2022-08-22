@@ -4,14 +4,18 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lt.codeacademy.blog.entity.ContentEntity;
 import lt.codeacademy.blog.entity.UserEntity;
 import lt.codeacademy.blog.validator.annotation.CompareFields;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Setter
@@ -20,7 +24,8 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @CompareFields(first = "password", second = "repeatPassword")
 public class User implements UserDetails {
-    private Long id;
+
+    private UUID id;
     @NotBlank
     private String name;
     private String surname;
@@ -30,26 +35,22 @@ public class User implements UserDetails {
     @NotBlank
     private String repeatPassword;
     private String country;
-    private String city;
-    private String street;
-    private String postCode;
     private int age;
     private String email;
     private Set<Role> role;
+    private List<Content> content;
 
-    public User(String name, String surname, String username, String password, String repeatPassword, String country, String city, String street, String postCode, int age, String email, Set<Role> role) {
+    public User(UUID id, String name, String surname, String username, String password, String country, int age, String email, Set<Role> role, List<Content> contents) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
         this.username = username;
         this.password = password;
-        this.repeatPassword = repeatPassword;
         this.country = country;
-        this.city = city;
-        this.street = street;
-        this.postCode = postCode;
         this.age = age;
         this.email = email;
         this.role = role;
+        this.content = contents;
     }
 
     public static User convert(UserEntity entity) {
@@ -57,18 +58,20 @@ public class User implements UserDetails {
                 .map(Role::convert)
                 .collect(Collectors.toSet());
 
-        return new User(entity.getName(),
+        List<Content> contents = entity.getContent().stream()
+                .map(Content::convert)
+                .toList();
+
+        return new User(entity.getId(),
+                entity.getName(),
                 entity.getSurname(),
                 entity.getUsername(),
                 entity.getPassword(),
-                entity.getRepeatPassword(),
                 entity.getCountry(),
-                entity.getCity(),
-                entity.getStreet(),
-                entity.getPostCode(),
                 entity.getAge(),
                 entity.getEmail(),
-                role);
+                role,
+                contents);
     }
 
     @Override

@@ -45,9 +45,9 @@ public class AppConfig implements WebMvcConfigurer {
         registry.addInterceptor(localeChangeInterceptor());
     }
 
-    /*@Override
-    public void addViewController(ViewControllerRegistry registry) {
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/login").setViewName("form/login");
         registry.addRedirectViewController("/", "/public/content");
-    }*/
+    }
 }

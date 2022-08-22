@@ -4,10 +4,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lt.codeacademy.blog.dto.User;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Setter
@@ -18,8 +20,10 @@ import java.util.stream.Collectors;
 public class UserEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue
+    @Column(columnDefinition = "VARCHAR(36)", updatable = false)
+    @Type(type = "uuid-char")
+    private UUID id;
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
@@ -29,15 +33,7 @@ public class UserEntity {
     @Column(nullable = false)
     private String password;
     @Column(nullable = false)
-    private String repeatPassword;
-    @Column(nullable = false)
     private String country;
-    @Column(nullable = false)
-    private String city;
-    @Column(nullable = false)
-    private String street;
-    @Column(nullable = false)
-    private String postCode;
     @Column(nullable = false)
     private int age;
     @Column(nullable = false)
@@ -47,43 +43,38 @@ public class UserEntity {
     private Set<RoleEntity> role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<CommentEntity> commentEntityList;
+    private List<ContentEntity> content;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<PictureEntity> pictureEntityList;
-
-    public UserEntity(String name, String surname, String username, String password, String repeatPassword, String country, String city, String street, String postCode, int age, String email, Set<RoleEntity> role) {
+    public UserEntity(UUID id, String name, String surname, String username, String password, String country, int age, String email, Set<RoleEntity> role, List<ContentEntity> content) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
         this.username = username;
         this.password = password;
-        this.repeatPassword = repeatPassword;
         this.country = country;
-        this.city = city;
-        this.street = street;
-        this.postCode = postCode;
         this.age = age;
         this.email = email;
         this.role = role;
+        this.content = content;
     }
 
     public static UserEntity convert(User user) {
         Set<RoleEntity> role = user.getRole().stream()
                 .map(RoleEntity::convert)
                 .collect(Collectors.toSet());
+        List<ContentEntity> content = user.getContent().stream()
+                .map(ContentEntity::convert)
+                .toList();
 
-
-        return new UserEntity(user.getName(),
+        return new UserEntity(user.getId(),
+                user.getName(),
                 user.getSurname(),
                 user.getUsername(),
                 user.getPassword(),
-                user.getRepeatPassword(),
                 user.getCountry(),
-                user.getCity(),
-                user.getStreet(),
-                user.getPostCode(),
                 user.getAge(),
                 user.getEmail(),
-                role);
+                role,
+                content);
     }
 }

@@ -11,8 +11,6 @@ import java.util.Date;
 
 @ControllerAdvice
 public class UserAdvice {
-
-
     @InitBinder
     public void initStringBinder(WebDataBinder webDataBinder) {
         PropertyEditor editor = new StringTrimmerEditor(true);

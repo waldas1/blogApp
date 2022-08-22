@@ -1,36 +1,57 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      th:with="userExist=${user.id ne null}">
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-    <title th:text="#{lt.codeacademy.blog.form.create.title}"></title>
-    <link th:href="@{/css/registration.css}" rel="stylesheet">
+    <title th:text="#{lt.codeacademy.blog.container.title}"></title>
+    <link th:href="@{/css/container.css}" rel="stylesheet">
 </head>
 <body>
 <nav th:replace="fragments/fragments :: navBar"></nav>
-<div class="container">
-    <div class="col-md7">
-        <h2 class="featurette-heading fw-normal lh-1">
-            asdgsadfghsdgasdgsda
-            <span class="text-muted"> saegfsadghsdfhdtfehdef</span>
-        </h2>
-        <p class="lead">
-            "asfasgewarrehgdfgdf"
-        </p>
-    </div>
-    <div class="col-md-5">
-        <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
-             width="500" height="500" xmlns="http://www.w3.org/2000/svg"
-             role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice"
-             focusable="false">
-            <title>Placeholder</title>
-            <rect width="100%" height="100%" fill="#eee"></rect>
-            <text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text>
-        </svg>
+<div class="album py-5 bg-light">
+    <div th:replace="fragments/fragments :: notification(${not contentByPage.hasContent()}, 'alert-info', #{lt.codeacademy.blog.content.message.empty.content})"></div>
+    <div class="container"
+         th:if="${contentByPage.hasContent()}">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            <div class="col"
+                 th:each="content : ${contentByPage.content}">
+                <div class="card shadow-sm">
+                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
+                         xmlns="http://www.w3.org/2000/svg"
+                         th:xmlbase="${#httpServletRequest.requestURI + content.picURL}"
+                         role="img"
+                         aria-label="Placeholder: Thumbnail"
+                         preserveAspectRatio="xMidYMid slice"
+                         focusable="false">
+                        <rect width="100%" height="100%" fill="#55595c"></rect>
+                        <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+                    </svg>
+
+                    <div class="card-body">
+                        <p class="card-text"
+                           th:text="${content.comment}"></p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-outline-secondary">
+                                    <a th:href="@{/public/content/{id}(id=${content.id})}"
+                                       th:text="#{lt.codeacademy.blog.content.buttton}"></a>
+                                </button>
+                            </div>
+                            <small class="text-muted">9 mins</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--<div th:replace="fragments/fragments :: contentDetails"></div>
+            <div th:replace="fragments/fragments :: contentDetails"></div>
+            <div th:replace="fragments/fragments :: contentDetails"></div>
+            <div th:replace="fragments/fragments :: contentDetails"></div>
+            <div th:replace="fragments/fragments :: contentDetails"></div>-->
+
+        </div>
     </div>
 </div>
 
