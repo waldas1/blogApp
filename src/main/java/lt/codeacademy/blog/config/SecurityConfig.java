@@ -31,7 +31,7 @@ public class SecurityConfig {
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                //.defaultSuccessUrl("/public/login", true)
+                .defaultSuccessUrl("/public/content", true)
                 .usernameParameter("customUsername")
                 .passwordParameter("customPassword")
                 .failureUrl("/login?error")
