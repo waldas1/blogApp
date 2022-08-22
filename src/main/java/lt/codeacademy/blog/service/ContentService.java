@@ -45,4 +45,8 @@ public class ContentService {
     public void deleteContent(UUID id) {
         contentRepository.deleteById(id);
     }
+
+    public void createContent(Content content){
+        contentRepository.save(ContentEntity.convert(content));
+    }
 }

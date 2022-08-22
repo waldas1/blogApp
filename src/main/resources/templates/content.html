@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -18,6 +19,7 @@
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             <div class="col"
                  th:each="content : ${contentByPage.content}">
+
                 <div class="card shadow-sm">
                     <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
                          xmlns="http://www.w3.org/2000/svg"
@@ -32,7 +34,7 @@
 
                     <div class="card-body">
                         <p class="card-text"
-                           th:text="${content.comment}"></p>
+                           th:text="${content.picComment}"></p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
                                 <button type="button" class="btn btn-sm btn-outline-secondary">
@@ -40,7 +42,13 @@
                                        th:text="#{lt.codeacademy.blog.content.buttton}"></a>
                                 </button>
                             </div>
-                            <small class="text-muted">9 mins</small>
+                            <small class="text-muted">
+                                <span th:text="${content.date}"></span>
+                                <a sec:authorize="hasRole('ADMIN')"
+                                   th:href="@{/content/{id}/delete(id=${content.id})}" class="text-danger">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </small>
                         </div>
                     </div>
                 </div>
