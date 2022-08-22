@@ -10,7 +10,7 @@
 <body class="text-center">
 <main class="form-signin w-100 m-auto"
       th:with="shouldShow=${param.error ne null}">
-    <div th:replace="fragments/fragments :: notification(${shouldShow}, 'alert-danger', #{lt.codeacademy.eshop.login.failed})"></div>
+    <div th:replace="fragments/fragments :: notification(${shouldShow}, 'alert-danger', #{lt.codeacademy.blog.login.failed})"></div>
     <form method="post" th:action="@{/login}">
         <h1>
             <i class="bi bi-emoji-sunglasses"
@@ -21,7 +21,7 @@
             <input type="text"
                    class="form-control"
                    id="floatingInputUsername"
-                   name="customUsername"
+                   name="Username"
                    th:placeholder="#{lt.codeacademy.blog.login.username}">
             <label for="floatingInputUsername"
                    th:text="#{lt.codeacademy.blog.login.username}"></label>
@@ -30,7 +30,7 @@
             <input type="password"
                    class="form-control"
                    id="floatingInputPassword"
-                   name="customPassword"
+                   name="Password"
                    th:placeholder="#{lt.codeacademy.blog.login.password}">
             <label for="floatingInputPassword"
                    th:text="#{lt.codeacademy.blog.login.password}"></label>

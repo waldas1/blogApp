@@ -4,13 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lt.codeacademy.blog.entity.ContentEntity;
 import lt.codeacademy.blog.entity.UserEntity;
 import lt.codeacademy.blog.validator.annotation.CompareFields;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 import java.util.List;
@@ -39,8 +37,9 @@ public class User implements UserDetails {
     private String email;
     private Set<Role> role;
     private List<Content> content;
+    private List<Comment> comments;
 
-    public User(UUID id, String name, String surname, String username, String password, String country, int age, String email, Set<Role> role, List<Content> content) {
+    public User(UUID id, String name, String surname, String username, String password, String country, int age, String email, Set<Role> role, List<Content> content,List<Comment> comments) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -51,6 +50,7 @@ public class User implements UserDetails {
         this.email = email;
         this.role = role;
         this.content = content;
+        this.comments = comments;
     }
 
     public static User convert(UserEntity entity) {
@@ -62,6 +62,10 @@ public class User implements UserDetails {
                 .map(Content::convert)
                 .toList();
 
+        List<Comment> comments = entity.getComments().stream()
+                .map(Comment::convert)
+                .toList();
+
         return new User(entity.getId(),
                 entity.getName(),
                 entity.getSurname(),
@@ -71,7 +75,8 @@ public class User implements UserDetails {
                 entity.getAge(),
                 entity.getEmail(),
                 role,
-                content);
+                content,
+                comments);
     }
 
     @Override
@@ -81,22 +86,22 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 
     public String getFullName() {

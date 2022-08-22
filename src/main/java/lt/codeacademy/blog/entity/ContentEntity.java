@@ -9,6 +9,8 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Setter
@@ -25,21 +27,33 @@ public class ContentEntity {
     private UUID id;
     @NotBlank
     private String picURL;
-    private String comment;
+    private String picComment;
 
+    private LocalDate date;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    public ContentEntity(UUID id, String picURL, String comment) {
+    @OneToMany(mappedBy = "content", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<CommentEntity> comments;
+
+    public ContentEntity(UUID id, String picURL, String picComment, LocalDate date, List<CommentEntity> comments) {
         this.picURL = picURL;
         this.id = id;
-        this.comment = comment;
+        this.picComment = picComment;
+        this.date = date;
+        this.comments = comments;
     }
 
-    public static ContentEntity convert(Content comment) {
-        return new ContentEntity(comment.getId(),
-                comment.getPicURL(),
-                comment.getComment());
+    public static ContentEntity convert(Content content) {
+        List<CommentEntity> comments = content.getComments().stream()
+                .map(CommentEntity::convert)
+                .toList();
+
+        return new ContentEntity(content.getId(),
+                content.getPicURL(),
+                content.getPicComments(),
+                content.getDate(),
+                comments);
     }
 }
