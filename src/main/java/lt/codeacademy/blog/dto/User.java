@@ -40,7 +40,7 @@ public class User implements UserDetails {
     private Set<Role> role;
     private List<Content> content;
 
-    public User(UUID id, String name, String surname, String username, String password, String country, int age, String email, Set<Role> role, List<Content> contents) {
+    public User(UUID id, String name, String surname, String username, String password, String country, int age, String email, Set<Role> role, List<Content> content) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -50,7 +50,7 @@ public class User implements UserDetails {
         this.age = age;
         this.email = email;
         this.role = role;
-        this.content = contents;
+        this.content = content;
     }
 
     public static User convert(UserEntity entity) {
@@ -58,7 +58,7 @@ public class User implements UserDetails {
                 .map(Role::convert)
                 .collect(Collectors.toSet());
 
-        List<Content> contents = entity.getContent().stream()
+        List<Content> content = entity.getContent().stream()
                 .map(Content::convert)
                 .toList();
 
@@ -71,7 +71,7 @@ public class User implements UserDetails {
                 entity.getAge(),
                 entity.getEmail(),
                 role,
-                contents);
+                content);
     }
 
     @Override
