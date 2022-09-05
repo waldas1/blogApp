@@ -12,7 +12,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Role implements GrantedAuthority {
 
-    private static final String ROLE = "Role_";
+    private static final String ROLE_PREFIX = "ROLE_";
 
     private UUID id;
 
@@ -20,10 +20,10 @@ public class Role implements GrantedAuthority {
 
     @Override
     public String getAuthority() {
-        return ROLE + name;
+        return ROLE_PREFIX + name;
     }
 
-    public static Role convert(RoleEntity entity){
+    public static Role convert(RoleEntity entity) {
         return new Role(entity.getId(), entity.getName());
     }
 }

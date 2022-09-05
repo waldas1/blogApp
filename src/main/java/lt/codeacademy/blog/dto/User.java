@@ -35,11 +35,11 @@ public class User implements UserDetails {
     private String country;
     private int age;
     private String email;
-    private Set<Role> role;
+    private Set<Role> roles;
     private List<Content> content;
     private List<Comment> comments;
 
-    public User(UUID id, String name, String surname, String username, String password, String country, int age, String email, Set<Role> role, List<Content> content,List<Comment> comments) {
+    public User(UUID id, String name, String surname, String username, String password, String country, int age, String email, Set<Role> roles) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -48,23 +48,13 @@ public class User implements UserDetails {
         this.country = country;
         this.age = age;
         this.email = email;
-        this.role = role;
-        this.content = content;
-        this.comments = comments;
+        this.roles = roles;
     }
 
     public static User convert(UserEntity entity) {
-        Set<Role> role = entity.getRole().stream()
+        Set<Role> roles = entity.getRoles().stream()
                 .map(Role::convert)
                 .collect(Collectors.toSet());
-
-        List<Content> content = entity.getContent().stream()
-                .map(Content::convert)
-                .toList();
-
-        List<Comment> comments = entity.getComments().stream()
-                .map(Comment::convert)
-                .toList();
 
         return new User(entity.getId(),
                 entity.getName(),
@@ -74,14 +64,12 @@ public class User implements UserDetails {
                 entity.getCountry(),
                 entity.getAge(),
                 entity.getEmail(),
-                role,
-                content,
-                comments);
+                roles);
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return roles;
     }
 
     @Override

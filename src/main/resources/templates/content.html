@@ -21,20 +21,12 @@
                  th:each="content : ${contentByPage.content}">
 
                 <div class="card shadow-sm">
-                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                         xmlns="http://www.w3.org/2000/svg"
-                         th:xmlbase="${#httpServletRequest.requestURI + content.picURL}"
-                         role="img"
-                         aria-label="Placeholder: Thumbnail"
-                         preserveAspectRatio="xMidYMid slice"
-                         focusable="false">
+                    <img th:src="${content.picURL}">
                         <rect width="100%" height="100%" fill="#55595c"></rect>
-                        <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-                    </svg>
-
+                        <text x="50%" y="50%" fill="#eceeef" dy=".3em"></text></src>
                     <div class="card-body">
                         <p class="card-text"
-                           th:text="${content.picComment}"></p>
+                           th:text="${content.pic_Comment}"></p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
                                 <button type="button" class="btn btn-sm btn-outline-secondary">
@@ -53,12 +45,6 @@
                     </div>
                 </div>
             </div>
-            <!--<div th:replace="fragments/fragments :: contentDetails"></div>
-            <div th:replace="fragments/fragments :: contentDetails"></div>
-            <div th:replace="fragments/fragments :: contentDetails"></div>
-            <div th:replace="fragments/fragments :: contentDetails"></div>
-            <div th:replace="fragments/fragments :: contentDetails"></div>-->
-
         </div>
     </div>
 </div>

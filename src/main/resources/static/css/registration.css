@@ -1,7 +1,7 @@
 body {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    min-height: 100vh;
 }
 
 .main-area {
@@ -30,5 +30,5 @@ button{
 }
 .footer {
     position: sticky;
-    top: 100vh;
+    margin-top: auto;
 }

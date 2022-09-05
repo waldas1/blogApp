@@ -1,44 +1,58 @@
 package lt.codeacademy.blog.controller;
 
-import lombok.extern.slf4j.Slf4j;
 import lt.codeacademy.blog.dto.Content;
+import lt.codeacademy.blog.service.CommentService;
 import lt.codeacademy.blog.service.ContentService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Size;
-import java.time.LocalDate;
 import java.util.UUID;
-@Slf4j
+
 @Controller
+@RequestMapping()
 public class ContentController {
 
     private final ContentService contentService;
+    private final CommentService commentService;
 
-    public ContentController(ContentService pictureService) {
-        this.contentService = pictureService;
+    public ContentController(ContentService contentService, CommentService commentService) {
+        this.contentService = contentService;
+        this.commentService = commentService;
     }
 
     @GetMapping("/public/content")
     public String showAllContent(Model model, Pageable pageable) {
-        Page<Content> page = contentService.getContents(pageable);
-        model.addAttribute("contentByPage", page);
+        model.addAttribute("contentByPage", contentService.getContents(pageable));
 
         return "content";
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/addNewContent/save")
+    public String showCreateContentForm(Model model) {
+        model.addAttribute("content", new Content());
+        return "form/addNewContent";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/addNewContent/save")
+    public String createContent(@Valid Content content, RedirectAttributes redirectAttributes) {
+
+        contentService.createContent(content);
+        redirectAttributes.addFlashAttribute("message", "lt.codeacademy.blog.content.create.message.success");
+        return "redirect:/addNewContent/save";
+    }
+
     @GetMapping("/public/content/{id}")
-    public String openContentDetails(@PathVariable UUID id, @Size(max = 6) Model model) {
+    public String openContentDetails(@PathVariable UUID id, Model model, Pageable pageable) {
         model.addAttribute("content", contentService.getContent(id));
+        model.addAttribute("comments", commentService.getComments(pageable));
         return "contentDetails";
     }
 
@@ -46,7 +60,7 @@ public class ContentController {
     @GetMapping("/content/{id}/update")
     public String showUpdateContent(@PathVariable UUID id, Model model) {
         model.addAttribute("content", contentService.getContent(id));
-        return "addNewContent";
+        return "form/addNewContent";
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -62,22 +76,4 @@ public class ContentController {
         contentService.deleteContent(id);
         return "redirect:/public/content";
     }
-
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/addNewContent/save")
-    public String showCreateContentForm(Model model){
-        model.addAttribute("addNewContent", new Content());
-        return "form/addNewContent";
-    }
-
-    @PreAuthorize("isAuthenticated()")
-    @PostMapping("/addNewContent/save")
-    public String createContent(@Valid Content content, RedirectAttributes redirectAttributes){
-        contentService.createContent(content);
-        content.setDate(LocalDate.now());
-        redirectAttributes.addFlashAttribute("message", "lt.codeacademy.blog.content.create.message.success");
-        return "redirect:/addNewContent/save";
-
-    }
-
 }

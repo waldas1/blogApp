@@ -1,17 +1,72 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <title th:if="${content ne null}" th:text="#{lt.codeacademy.blog.contentDetails.title}"></title>
-    <link th:href="@{/css/registration.css}" rel="stylesheet">
 </head>
 <body>
 <nav th:replace="fragments/fragments :: navBar"></nav>
+<div class="container">
+    <div class="col"
+         th:if="${content ne null}">
+        <div class="card mb-3 h-100">
+            <img th:src="${content.picURL}">
+            <rect width="100%" height="100%" fill="#55595c"></rect>
+            <text x="50%" y="50%" fill="#eceeef" dy=".3em"></text></src>
+            <div class="card-body">
+                <p class="card-text" th:text="${content.pic_Comment}"></p>
+                <div class="d-flex">
+                    <div class="p-2 flex-grow-1">
+                        <small class="text-muted" th:text="#{lt.codeacademy.blog.contentDetails.comment}"></small>
+                    </div>
+                </div>
+                <div sec:authorize="hasRole('ADMIN')"
+                     th:replace="fragments/fragments :: icon('p-2', 'text-success', @{/content/{id}/update(id=${content.id})}, 'bi bi-arrow-clockwise')"></div>
+                <div sec:authorize="hasRole('ADMIN')"
+                     th:replace="fragments/fragments :: icon('p-2', 'text-danger', @{/content/{id}/delete(id=${content.id})}, 'bi bi-trash')"></div>
+            </div>
+            <div class="card">
+                <div style="padding: 0" class="card-body d-flex">
+                    <div class="p-2 flex-grow-1"
+                         text="text-muted"
+                         th:text="#{lt.codeacademy.blog.contentDetails.add.comment}"></div>
+                    <div sec:authorize="isAuthenticated()"
+                         th:replace="fragments/fragments :: icon('p-2', 'text-success', @{/comments/{id}/save(id=${content.id})}, 'bi bi-plus-circle')"></div>
+                </div>
 
+            </div>
+            <ul class="list-group list-group-flush"
+                th:if="${comments.hasContent() && comment.content.id eq content.id}"
+                th:each="comment: ${comments.content}">
+                <div class="d-flex">
+                    <div class="p-2 flex-grow-1">
+                        <div class="text-dark"
+                        th:text="${comment.user.username}"></div>
+                        <div class="text-dark"
+                        th:text="${comment.comment}"></div>
+                        <div class="text-muted"
+                        th:text="${comment.date}"></div>
+                    </div>
+
+                    <div class="p-2" sec:authorize="isAuthenticated()"
+                         th:if="${#authentication.principal.id eq comment.user.id}">
+                        <div th:replace="fragments/fragments :: icon('', 'text-success', @{/comment/{id}/update(id=${comment.id})}, 'bi bi-arrow-clockwise')"></div>
+                    </div>
+
+                    <div class="p-2" sec:authorize="isAuthenticated()"
+                         th:if="${#authorization.getAuthentication().name eq 'admin' || #authentication.principal.id eq comment.user.id}">
+                        <div th:replace="fragments/fragments :: icon('', 'text-danger', @{/comment/{id}/delete(id=${comment.id})}, 'bi bi-trash')"></div>
+                    </div>
+                </div>
+            </ul>
+        </div>
+    </div>
+</div>
 </body>
 <footer th:replace="fragments/fragments :: footer"></footer>
 </html>

@@ -32,8 +32,7 @@ public class CompareFieldsValidator implements ConstraintValidator<CompareFields
             field.setAccessible(true);
 
             return field.get(o);
-        }catch(Exception e) {
-            //TODO log info
+        } catch (Exception e) {
         }
 
         return null;

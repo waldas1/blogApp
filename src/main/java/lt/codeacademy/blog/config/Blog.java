@@ -22,6 +22,4 @@ public class Blog {
     private String email;
     @Value("@All rights belong to Valdemar")
     private String copyRight;
-    @Value("#{'Salcininkai, Mokyklos g. 21 Lithuania'.split(';')}")
-    private List<String> addresses;
 }

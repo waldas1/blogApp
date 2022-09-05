@@ -1,10 +1,8 @@
 package lt.codeacademy.blog.controller;
 
-import lombok.extern.slf4j.Slf4j;
 import lt.codeacademy.blog.dto.User;
 import lt.codeacademy.blog.service.UserService;
 import lt.codeacademy.blog.validator.UserValidator;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

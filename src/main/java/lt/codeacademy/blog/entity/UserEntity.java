@@ -40,7 +40,7 @@ public class UserEntity {
     private String email;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<RoleEntity> role;
+    private Set<RoleEntity> roles;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ContentEntity> content;
@@ -48,7 +48,7 @@ public class UserEntity {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<CommentEntity> comments;
 
-    public UserEntity(UUID id, String name, String surname, String username, String password, String country, int age, String email, Set<RoleEntity> role, List<ContentEntity> content, List<CommentEntity> comments) {
+    public UserEntity(UUID id, String name, String surname, String username, String password, String country, int age, String email, Set<RoleEntity> roles) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -57,23 +57,14 @@ public class UserEntity {
         this.country = country;
         this.age = age;
         this.email = email;
-        this.role = role;
-        this.content = content;
-        this.comments = comments;
+        this.roles = roles;
+
     }
 
     public static UserEntity convert(User user) {
-        Set<RoleEntity> role = user.getRole().stream()
+        Set<RoleEntity> roles = user.getRoles().stream()
                 .map(RoleEntity::convert)
                 .collect(Collectors.toSet());
-
-        List<ContentEntity> content = user.getContent().stream()
-                .map(ContentEntity::convert)
-                .toList();
-
-        List<CommentEntity> comments = user.getComments().stream()
-                .map(CommentEntity::convert)
-                .toList();
 
         return new UserEntity(user.getId(),
                 user.getName(),
@@ -83,8 +74,6 @@ public class UserEntity {
                 user.getCountry(),
                 user.getAge(),
                 user.getEmail(),
-                role,
-                content,
-                comments);
+                roles);
     }
 }

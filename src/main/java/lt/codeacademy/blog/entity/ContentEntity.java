@@ -8,7 +8,6 @@ import lt.codeacademy.blog.dto.Content;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -25,10 +24,11 @@ public class ContentEntity {
     @Column(columnDefinition = "VARCHAR(36)", updatable = false)
     @Type(type = "uuid-char")
     private UUID id;
-    @NotBlank
+    @Column(nullable = false)
     private String picURL;
-    private String picComment;
-
+    @Column(nullable = false)
+    private String pic_Comment;
+    @Column(nullable = false)
     private LocalDate date;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
@@ -37,23 +37,17 @@ public class ContentEntity {
     @OneToMany(mappedBy = "content", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<CommentEntity> comments;
 
-    public ContentEntity(UUID id, String picURL, String picComment, LocalDate date, List<CommentEntity> comments) {
+    public ContentEntity(UUID id, String picURL, String pic_Comment, LocalDate date) {
         this.picURL = picURL;
         this.id = id;
-        this.picComment = picComment;
+        this.pic_Comment = pic_Comment;
         this.date = date;
-        this.comments = comments;
     }
 
     public static ContentEntity convert(Content content) {
-        List<CommentEntity> comments = content.getComments().stream()
-                .map(CommentEntity::convert)
-                .toList();
-
         return new ContentEntity(content.getId(),
                 content.getPicURL(),
-                content.getPicComments(),
-                content.getDate(),
-                comments);
+                content.getPic_Comment(),
+                content.getDate());
     }
 }

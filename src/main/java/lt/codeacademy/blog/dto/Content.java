@@ -8,7 +8,6 @@ import lt.codeacademy.blog.entity.ContentEntity;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -20,25 +19,14 @@ public class Content {
     private UUID id;
     @NotBlank
     private String picURL;
-    private String picComments;
+    @NotBlank
+    private String pic_Comment;
     private LocalDate date;
-    private List<Comment> comments;
-
-    public Content(UUID id, String picURL, String picComment, List<Comment> comments) {
-        this.id = id;
-        this.picURL = picURL;
-        this.picComments = picComment;
-        this.comments = comments;
-    }
 
     public static Content convert(ContentEntity entity) {
-        List<Comment> comments = entity.getComments().stream()
-                .map(Comment::convert)
-                .toList();
-
         return new Content(entity.getId(),
                 entity.getPicURL(),
-                entity.getPicComment(),
-                comments);
+                entity.getPic_Comment(),
+                entity.getDate());
     }
 }
