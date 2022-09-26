@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lt.codeacademy.blog.dto.Comment;
 import org.hibernate.annotations.Type;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -32,12 +31,11 @@ public class CommentEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "content_id")
-    private ContentEntity content;
+    private ContentEntity contentEntity;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private UserEntity user;
-
 
     public static CommentEntity convert(Comment comment) {
         ContentEntity contentEntity = ContentEntity.convert(comment.getContent());

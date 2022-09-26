@@ -3,6 +3,7 @@ package lt.codeacademy.blog.controller;
 import lt.codeacademy.blog.dto.Content;
 import lt.codeacademy.blog.service.CommentService;
 import lt.codeacademy.blog.service.ContentService;
+import lt.codeacademy.blog.service.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,7 +44,6 @@ public class ContentController {
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/addNewContent/save")
     public String createContent(@Valid Content content, RedirectAttributes redirectAttributes) {
-
         contentService.createContent(content);
         redirectAttributes.addFlashAttribute("message", "lt.codeacademy.blog.content.create.message.success");
         return "redirect:/addNewContent/save";
@@ -67,7 +67,7 @@ public class ContentController {
     @PostMapping("/content/{id}/update")
     public String updateContent(@Valid Content content) {
         contentService.updateContent(content);
-        return "redirect:/public/content";
+        return "redirect:/public/content/{id}";
     }
 
     @PreAuthorize("hasRole('ADMIN')")

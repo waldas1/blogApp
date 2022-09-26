@@ -36,7 +36,6 @@ public class User implements UserDetails {
     private int age;
     private String email;
     private Set<Role> roles;
-    private List<Content> content;
     private List<Comment> comments;
 
     public User(UUID id, String name, String surname, String username, String password, String country, int age, String email, Set<Role> roles) {

@@ -14,19 +14,35 @@
 </head>
 <body>
 <nav th:replace="fragments/fragments :: navBar"></nav>
-<div class="container">
-    <h3 th:if="${contentExist}" th:text="#{lt.codeacademy.blog.comment.update}"></h3>
-    <h3 th:if="${not contentExist}" th:text="#{lt.codeacademy.blog.comment.create}"></h3>
-    /action
+
+<div th:if="${contentExist}" class="container">
+    <h3 th:text="#{lt.codeacademy.blog.comment.update}"></h3>
+    <form method="post" th:object="${content}" th:action="@{/content/{id}/update(id=${content.id})}">
+        <div class="album py-5 bg-light">
+            <div th:replace="fragments/fragments :: inputWitherrorHandler('floatingInputPicUrl', 'picURL', ${content.picURL ne null}, #{lt.codeacademy.blog.contentDetails.form.picUrl}, 'text', false)"></div>
+            <div th:replace="fragments/fragments :: inputWitherrorHandler('floatingTextareaPic_Comment', 'pic_Comment', ${content.pic_Comment ne null}, #{lt.codeacademy.blog.contentDetails.form.picComment}, 'text', false)"></div>
+        </div>
+        <button type="submit"
+                class="btn btn-sm btn-outline-secondary"
+                 th:text="#{lt.codeacademy.blog.contentDetails.button.update}"></button>
+    </form>
+</div>
+
+<div th:if="${not contentExist}" class="container">
+    <h3 th:text="#{lt.codeacademy.blog.comment.create}"></h3>
+
     <form method="post" th:object="${content}" th:action="@{/addNewContent/save}">
         <div class="album py-5 bg-light">
             <div th:replace="fragments/fragments :: inputWitherrorHandler('floatingInputPicUrl', 'picURL', ${content.picURL ne null}, #{lt.codeacademy.blog.contentDetails.form.picUrl}, 'text', false)"></div>
             <div th:replace="fragments/fragments :: inputWitherrorHandler('floatingTextareaPic_Comment', 'pic_Comment', ${content.pic_Comment ne null}, #{lt.codeacademy.blog.contentDetails.form.picComment}, 'text', false)"></div>
         </div>
         <button type="submit"
-                th:text="#{lt.codeacademy.blog.contentDetails.button}"></button>
-    </form>
+                class="btn btn-sm btn-outline-secondary"
+                th:text="#{lt.codeacademy.blog.contentDetails.button.create}"></button>
 </div>
+
+
+
 </body>
 <footer th:replace="fragments/fragments :: footer"></footer>
 </html>

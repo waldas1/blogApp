@@ -5,8 +5,8 @@ import lt.codeacademy.blog.dto.Content;
 import lt.codeacademy.blog.dto.User;
 import lt.codeacademy.blog.service.CommentService;
 import lt.codeacademy.blog.service.ContentService;
+import lt.codeacademy.blog.service.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,7 +30,7 @@ public class CommentController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("comments/{id}/save")
+    @GetMapping("comment/{id}/save")
     public String newComment(@PathVariable UUID id, Model model) {
         model.addAttribute("comment", new Comment());
         model.addAttribute("content", contentService.getContent(id));
@@ -38,7 +38,7 @@ public class CommentController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("comments/{id}/save")
+    @PostMapping("comment/{id}/save")
     public String createComment(@Valid Comment comment, @PathVariable UUID id, @AuthenticationPrincipal User user) {
 
         Content content = contentService.getContent(id);
@@ -51,26 +51,26 @@ public class CommentController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("update/{id}")
+    @PostMapping("comment/update/{id}")
     public String updateComment(@PathVariable UUID id, @Valid Comment comment) {
         comment.setUser(commentService.getComment(id).getUser());
         comment.setContent(commentService.getComment(id).getContent());
         commentService.updateComment(comment);
-        return "redirect:/public/content" + commentService.getComment(id).getContent().getId().toString();
+        return "redirect:/public/content";
     }
 
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("update/{id}")
+    @GetMapping("comment/update/{id}")
     public String updateForm(@PathVariable UUID id, Model model) {
         model.addAttribute("comment", commentService.getComment(id));
         return "form/createComment";
     }
 
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/delete/{id}")
+    @GetMapping("comment/delete/{id}")
     public String deleteComment(@PathVariable UUID id) {
         UUID contentId = commentService.getComment(id).getContent().getId();
         commentService.deleteComment(id);
-        return "redirect:/public/content/";
+        return "redirect:/public/content/" + contentId.toString();
     }
 }

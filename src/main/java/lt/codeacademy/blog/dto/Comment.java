@@ -24,7 +24,7 @@ public class Comment {
     private User user;
 
     public static Comment convert(CommentEntity entity) {
-        Content content = Content.convert(entity.getContent());
+        Content content = Content.convert(entity.getContentEntity());
         User user = User.convert(entity.getUser());
         return new Comment(entity.getId(),
                 entity.getComment(),

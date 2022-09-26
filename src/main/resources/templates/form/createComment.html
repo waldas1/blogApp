@@ -7,21 +7,34 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link th:href="@{/css/registration.css}" rel="stylesheet">
     <title th:text="#{lt.codeacademy.blog.container.title}"></title>
 </head>
 <body>
 <nav th:replace="fragments/fragments :: navBar"></nav>
-<div class="container">
-    <h3 th:if="${commentExist}" th:text="#{lt.codeacademy.blog.comment.update}"></h3>
-    <h3 th:if="${not commentExist}" th:text="#{lt.codeacademy.blog.comment.create}"></h3>
-    <form method="post" th:object="${comment}" th:action="@{/comments/{id}/save(id=${content.id})}">
+<div th:if="${not commentExist}" class="container">
+    <h3 th:text="#{lt.codeacademy.blog.comment.create}"></h3>
+    <form method="post" th:object="${comment}" th:action="@{/comment/{id}/save(id=${content.id})}">
         <div class="album py-5 bg-light">
             <div th:replace="fragments/fragments :: inputWitherrorHandler('floatingTextareaComment', 'comment', ${comment.comment ne null}, #{lt.codeacademy.blog.add.comment}, 'text', false)"></div>
             <div class="d-flex justify-content-end">
                 <button type="submit"
-                th:if="${commentExist}" th:text="#{lt.codeacademy.blog.comment.update}"></button>
+                        class="btn btn-sm btn-outline-secondary"
+                        th:text="#{lt.codeacademy.blog.comment.create}"></button>
+            </div>
+        </div>
+    </form>
+</div>
+<div th:if="${commentExist}" class="container">
+    <h3 th:text="#{lt.codeacademy.blog.comment.update}"></h3>
+
+    <form method="post" th:object="${comment}" th:action="@{/comment/update/{id}(id=${comment.id})}">
+        <div class="album py-5 bg-light">
+            <div th:replace="fragments/fragments :: inputWitherrorHandler('floatingTextareaComment', 'comment', ${comment.comment ne null}, #{lt.codeacademy.blog.add.comment}, 'text', false)"></div>
+            <div class="d-flex justify-content-end">
                 <button type="submit"
-                th:if="${not commentExist}" th:text="#{lt.codeacademy.blog.comment.create}"></button>
+                        class="btn btn-sm btn-outline-secondary"
+                        th:text="#{lt.codeacademy.blog.comment.update}"></button>
             </div>
         </div>
     </form>

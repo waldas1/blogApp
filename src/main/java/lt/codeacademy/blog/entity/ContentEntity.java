@@ -30,16 +30,13 @@ public class ContentEntity {
     private String pic_Comment;
     @Column(nullable = false)
     private LocalDate date;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
 
-    @OneToMany(mappedBy = "content", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "contentEntity", cascade = CascadeType.ALL)
     private List<CommentEntity> comments;
 
     public ContentEntity(UUID id, String picURL, String pic_Comment, LocalDate date) {
-        this.picURL = picURL;
         this.id = id;
+        this.picURL = picURL;
         this.pic_Comment = pic_Comment;
         this.date = date;
     }

@@ -22,8 +22,9 @@
 
                 <div class="card shadow-sm">
                     <img th:src="${content.picURL}">
-                        <rect width="100%" height="100%" fill="#55595c"></rect>
-                        <text x="50%" y="50%" fill="#eceeef" dy=".3em"></text></src>
+                    <rect width="100%" height="100%" fill="#55595c"></rect>
+                    <text x="50%" y="50%" fill="#eceeef" dy=".3em"></text>
+                    </src>
                     <div class="card-body">
                         <p class="card-text"
                            th:text="${content.pic_Comment}"></p>
@@ -36,10 +37,13 @@
                             </div>
                             <small class="text-muted">
                                 <span th:text="${content.date}"></span>
+
                                 <a sec:authorize="hasRole('ADMIN')"
-                                   th:href="@{/content/{id}/delete(id=${content.id})}" class="text-danger">
+                                   th:href="@{/content/{id}/delete(id=${content.id})}"
+                                   class="text-danger">
                                     <i class="bi bi-trash"></i>
                                 </a>
+
                             </small>
                         </div>
                     </div>
